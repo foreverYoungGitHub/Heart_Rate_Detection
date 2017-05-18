@@ -1,0 +1,3 @@
+/Users/Young/projects/Heart_Rate_Detection/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Young/projects/Heart_Rate_Detection/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Young/projects/Heart_Rate_Detection/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir

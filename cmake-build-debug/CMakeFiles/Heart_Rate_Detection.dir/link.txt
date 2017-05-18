@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++   -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/Heart_Rate_Detection.dir/ColorMagnify.cpp.o CMakeFiles/Heart_Rate_Detection.dir/main.cpp.o  -o Heart_Rate_Detection  
