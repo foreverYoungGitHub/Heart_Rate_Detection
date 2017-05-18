@@ -9,3 +9,5 @@ file(GLOB inc "./*.h")
 file(GLOB src "./*.cpp")
 
 add_executable(Heart_Rate_Detection ${inc} ${src})
+
+target_link_libraries(Heart_Rate_Detection ${OpenCV_LIBS} )

@@ -112,7 +112,7 @@ void ColorMagnify::buildGaussianPyramid(const cv::Mat &img, const int levels,
 *
 * @return the destinate image
 */
-cv::Mat buildGaussianPyramid(const cv::Mat &img, const int levels) {
+cv::Mat ColorMagnify::buildGaussianPyramid(const cv::Mat &img, const int levels) {
 	if (levels < 1) {
 		perror("Levels should be larger than 1");
 	}
