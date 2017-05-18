@@ -12,16 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de714a15-b8d1-408b-9331-d9d229d4720d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ColorMagnify.cpp" afterPath="$PROJECT_DIR$/ColorMagnify.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/DependInfo.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/DependInfo.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/build.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/build.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/depend.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/depend.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/flags.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/flags.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/link.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Heart_Rate_Detection.dir/link.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/Heart_Rate_Detection.cbp" afterPath="$PROJECT_DIR$/cmake-build-debug/Heart_Rate_Detection.cbp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="48" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="48" />
+            <state relative-caret-position="155">
+              <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding>
                 <element signature="e#34#59#0" expanded="true" />
               </folding>
@@ -59,18 +50,18 @@
       <file leaf-file-name="ColorMagnify.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ColorMagnify.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="49">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="314">
+              <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ColorMagnify.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ColorMagnify.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ColorMagnify.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="114" column="22" lean-forward="false" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="22" />
+            <state relative-caret-position="163">
+              <caret line="226" column="22" lean-forward="false" selection-start-line="226" selection-start-column="22" selection-end-line="226" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -93,6 +84,7 @@
       <find>concat</find>
       <find>filtered</find>
       <find>rate_</find>
+      <find>time</find>
       <find>buildGaussianPyramid</find>
     </findStrings>
   </component>
@@ -104,8 +96,8 @@
       <list>
         <option value="$PROJECT_DIR$/ColorMagnify.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/ColorMagnify.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/ColorMagnify.cpp" />
       </list>
     </option>
   </component>
@@ -362,29 +354,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ColorMagnify.cpp">
+    <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="114" column="22" lean-forward="false" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="22" />
-          <folding />
+        <state relative-caret-position="155">
+          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <element signature="e#34#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ColorMagnify.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state relative-caret-position="314">
+          <caret line="36" column="18" lean-forward="false" selection-start-line="36" selection-start-column="18" selection-end-line="36" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/ColorMagnify.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="48" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="48" />
-          <folding>
-            <element signature="e#34#59#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="163">
+          <caret line="226" column="22" lean-forward="false" selection-start-line="226" selection-start-column="22" selection-end-line="226" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>

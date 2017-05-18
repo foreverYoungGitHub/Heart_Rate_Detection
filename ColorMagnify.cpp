@@ -122,6 +122,8 @@ cv::Mat ColorMagnify::buildGaussianPyramid(const cv::Mat &img, const int levels)
 		cv::pyrDown(currentImg, down);
 		currentImg = std::move(down);
 	}
+
+    return currentImg;
 }
 
 /**
