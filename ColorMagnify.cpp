@@ -14,8 +14,8 @@
 
 #include "ColorMagnify.h"
 
-ColorMagnify::ColorMagnify() : 
-	 fl_ (0.83), fh_(1.0),rate_(30),levels_(3),alpha_(50),length_(30){
+ColorMagnify::ColorMagnify() :
+	fl_(0.83),fh_(1.0),rate_(30), levels_(4), alpha_(100), length_(30) {
 }
 
 ColorMagnify::~ColorMagnify() {}
@@ -23,13 +23,34 @@ ColorMagnify::~ColorMagnify() {}
 // main process of color magnification
 void ColorMagnify::EVM(std::vector<cv::Mat>&frames, std::vector<cv::Mat>& imgs)
 {
+	length_ = frames.size();
 
 	// down sampled frames - space filter
 	std::vector<cv::Mat> downSampledFrames;
+	//int abcd = 0;
+	for(auto & frame : frames) {
+		//abcd++;
+		//if (abcd == 1)
+			//continue;
+		//cv::resize(frame, frame, cv::Size(10, 10));
+		//std::cout << frame << std::endl;
+		
+		frame.convertTo(frame, CV_32FC3);
+		//std::cout << frame << std::endl;
+		
 
-	for(auto frame : frames) {
 		auto pyramid = buildGaussianPyramid(frame, levels_);
+		//std::cout << pyramid << std::endl;
+		//cv::cvtColor(pyramid, pyramid, CV_RGB2BGR);
+		//std::cout << pyramid << std::endl;
+		//pyramid = rgb2ntsc(pyramid);//convert to yiq
+		//cv::cvtColor(pyramid, pyramid, CV_BGR2RGB);
+		//std::cout << pyramid << std::endl;
+		//cv::imshow("1", pyramid);
+		//cv::waitKey(0);
 		downSampledFrames.push_back(pyramid);
+
+
 	}
 
 //	for (int i=0; i < frames.size(); i++) {
@@ -41,23 +62,35 @@ void ColorMagnify::EVM(std::vector<cv::Mat>&frames, std::vector<cv::Mat>& imgs)
 
 	// concatenated image of all the down sampled frames
 	auto videoMat = concat(downSampledFrames);
+
+	
+
 //	concat(downSampledFrames, videoMat);
 
 	// filtered image after concatenate
 	cv::Mat filtered;
 	temporalIdealFilter(videoMat, filtered);
 
+    cv::imshow("0",filtered);
+    cv::waitKey(0);
+	
 	// amplified image
-	auto amplified = amplify(filtered);
+	auto amplified=amplify(filtered);
+
+//	double minVal, maxVal;
+//	minMaxLoc(amplified, &minVal, &maxVal);
+//	amplified.convertTo(amplified, CV_8UC3, 255.0 / (maxVal - minVal),
+//		(-minVal * 255.0 / (maxVal - minVal)));
+//	cv::Mat _;
+////	cv::resize(amplified, _, cv::Size(200, 200));
+//	//std::cout << _ << std::endl;
+//	cv::imshow("b", _);
+//	cv::waitKey(0);
 
 
 	// frames after temporal filtering
 	std::vector<cv::Mat > filteredFrames;
 	deConcat(amplified, downSampledFrames[0].size(), filteredFrames);
-
-	int n = filteredFrames.size();
-	int m = frames.size();
-
 	for (int j=0; j < frames.size(); j++) {
 
 		// motion image
@@ -65,20 +98,51 @@ void ColorMagnify::EVM(std::vector<cv::Mat>&frames, std::vector<cv::Mat>& imgs)
 
 		upsamplingFromGaussianPyramid(filteredFrames[j], levels_, motion);
 		resize(motion, motion, frames[j].size());
-
+		
 		// temp image
 		cv::Mat temp = frames[j] + motion;
+		
 		double minVal, maxVal;
 		minMaxLoc(temp, &minVal, &maxVal);//find minimun and maximum intensities
-
+		//temp = ntsc2rgb(temp);
+		
 		// output frame
 		cv::Mat output;
 		temp.convertTo(output, CV_8UC3, 255.0 / (maxVal - minVal),
-			-minVal * 255.0 / (maxVal - minVal));
+			(-minVal * 255.0 / (maxVal - minVal)));
+		/*cv::Mat _;
+		cv::resize(output, _, cv::Size(10, 10));
+		std::cout << _ << std::endl;
+		cv::imshow("b", output);
+		cv::waitKey(0);*/
 		imgs.push_back(output);
 	}
 }
 
+// convert rgb to yiq
+cv::Mat ColorMagnify::rgb2ntsc(const cv::Mat_<cv::Vec3f>& src)
+{
+	auto ret = src.clone();
+	cv::Mat T = (cv::Mat_<float>(3, 3) << 1, 1, 1, 0.956, -0.272, -1.106, 0.621, -0.647, 1.703);
+	T = T.inv(); //here inverse!
+
+	for (int j = 0; j<src.rows; j++) {
+		for (int i = 0; i<src.cols; i++) {
+			ret.at<cv::Vec3f>(j, i)(0) = src.at<cv::Vec3f>(j, i)(0) * T.at<float>(0.0)
+				+ src.at<cv::Vec3f>(j, i)(1) * T.at<float>(0, 1)
+				+ src.at<cv::Vec3f>(j, i)(2) * T.at<float>(0, 2);
+
+			ret.at<cv::Vec3f>(j, i)(1) = src.at<cv::Vec3f>(j, i)(0) * T.at<float>(1.0)
+				+ src.at<cv::Vec3f>(j, i)(1) * T.at<float>(1, 1)
+				+ src.at<cv::Vec3f>(j, i)(2) * T.at<float>(1, 2);
+
+			ret.at<cv::Vec3f>(j, i)(2) = src.at<cv::Vec3f>(j, i)(0) * T.at<float>(2.0)
+				+ src.at<cv::Vec3f>(j, i)(1) * T.at<float>(2, 1)
+				+ src.at<cv::Vec3f>(j, i)(2) * T.at<float>(2, 2);
+		}
+	}
+	return ret;
+}
 /**
 * buildGaussianPyramid	-	construct a gaussian pyramid from a given image
 *
@@ -123,7 +187,7 @@ cv::Mat ColorMagnify::buildGaussianPyramid(const cv::Mat &img, const int levels)
 		currentImg = std::move(down);
 	}
 
-    return currentImg;
+	return currentImg;
 }
 
 /**
@@ -141,9 +205,8 @@ void ColorMagnify::temporalIdealFilter(const cv::Mat &src,
 
 	// split into 3 channels
 	cv::split(src, channels);
-
+	
 	for (int i = 0; i < 3; ++i) {
-
 		cv::Mat current = channels[i];  // current channel
 		cv::Mat tempImg;
 
@@ -151,12 +214,11 @@ void ColorMagnify::temporalIdealFilter(const cv::Mat &src,
 		int height = cv::getOptimalDFTSize(current.rows);
 
 		cv::copyMakeBorder(current, tempImg,
-			0, height - current.rows,
-			0, width - current.cols,
-			cv::BORDER_CONSTANT, cv::Scalar::all(0));
+			               0, height - current.rows,
+			               0, width - current.cols,
+			               cv::BORDER_CONSTANT, cv::Scalar::all(0));
 
 		// do the DFT
-		//tempImg.convertTo(tempImg, CV_32FC1);
 		cv::dft(tempImg, tempImg, cv::DFT_ROWS | cv::DFT_SCALE);
 
 		// construct the filter
@@ -171,10 +233,11 @@ void ColorMagnify::temporalIdealFilter(const cv::Mat &src,
 
 		// copy back to the current channel
 		tempImg(cv::Rect(0, 0, current.cols, current.rows)).copyTo(channels[i]);
+		
 	}
 	// merge channels
 	cv::merge(channels, 3, dst);
-
+	
 	// normalize the filtered image
 	cv::normalize(dst, dst, 0, 1, CV_MINMAX);
 }
@@ -187,7 +250,7 @@ void ColorMagnify::temporalIdealFilter(const cv::Mat &src,
 * @param fh		-	high cut-off
 * @param rate      -   sampling rate(i.e. video frame rate)
 */
-void ColorMagnify::createIdealBandpassFilter(cv::Mat &filter, double& _fl, double& _fh, double& _rate)
+void ColorMagnify::createIdealBandpassFilter(cv::Mat &filter, double _fl, double _fh, double _rate)
 {
 	int width = filter.cols;
 	int height = filter.rows;
@@ -309,4 +372,28 @@ void ColorMagnify::deConcat(const cv::Mat &src, const cv::Size &frameSize, std::
 		cv::Mat reshaped = line.reshape(3, frameSize.height).clone();
 		frames.push_back(reshaped);
 	}
+}
+// convert yiq to rgb
+cv::Mat ColorMagnify::ntsc2rgb(const cv::Mat_<cv::Vec3f>& src)
+{
+	auto ret = src.clone();
+	cv::Mat T = (cv::Mat_<float>(3, 3) << 1.0, 0.956, 0.621, 1.0, -0.272, -0.647, 1.0, -1.106, 1.703);
+	T = T.t(); //here transpose!
+
+	for (int j = 0; j<src.rows; j++) {
+		for (int i = 0; i<src.cols; i++) {
+			ret.at<cv::Vec3f>(j, i)(0) = src.at<cv::Vec3f>(j, i)(0) * T.at<float>(0.0)
+				+ src.at<cv::Vec3f>(j, i)(1) * T.at<float>(0, 1)
+				+ src.at<cv::Vec3f>(j, i)(2) * T.at<float>(0, 2);
+
+			ret.at <cv::Vec3f > (j, i)(1) = src.at<cv::Vec3f>(j, i)(0) * T.at<float>(1.0)
+				+ src.at<cv::Vec3f>(j, i)(1) * T.at<float>(1, 1)
+				+ src.at<cv::Vec3f>(j, i)(2) * T.at<float>(1, 2);
+
+			ret.at<cv::Vec3f>(j, i)(2) = src.at<cv::Vec3f>(j, i)(0) * T.at<float>(2.0)
+				+ src.at<cv::Vec3f>(j, i)(1) * T.at<float>(2, 1)
+				+ src.at<cv::Vec3f>(j, i)(2) * T.at<float>(2, 2);
+		}
+	}
+	return ret;
 }

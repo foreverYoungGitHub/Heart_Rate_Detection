@@ -16,6 +16,9 @@ public:
 	//main process
 	void EVM(std::vector<cv::Mat>&frames, std::vector<cv::Mat>& imgs);
 
+	// convert rgb to yiq
+	cv::Mat rgb2ntsc(const cv::Mat_<cv::Vec3f>& src);
+
 	// build a gaussian pyramid
 	void buildGaussianPyramid(const cv::Mat &img, const int levels,
 		std::vector<cv::Mat> &pyramid);
@@ -30,7 +33,7 @@ public:
 		cv::Mat &dst);
 
 	// create an ideal bandpass processor
-	void createIdealBandpassFilter(cv::Mat &filter, double& fl, double& fh, double& rate);
+	void createIdealBandpassFilter(cv::Mat &filter, double fl, double fh, double rate);
 
 	// amplify motion
 	void amplify(const cv::Mat &src, cv::Mat &dst);
@@ -45,6 +48,8 @@ public:
 	// de-concat the concatnate image into frames
 	void deConcat(const cv::Mat &src, const cv::Size &frameSize, std::vector<cv::Mat> &frames);
 
+	// convert yiq to rgb
+	cv::Mat ntsc2rgb(const cv::Mat_<cv::Vec3f>& src);
 
 	//
 	double fl_;
