@@ -5,10 +5,15 @@ project("${PROJECT_NAME}")
 set(CMAKE_CXX_STANDARD 11)
 
 find_package(OpenCV)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
-file(GLOB inc "./*.h" "./color_magnify/*.h")
-file(GLOB src "./*.cpp" "./color_magnify/*.cpp")
+find_package(Caffe)
+include_directories(${Caffe_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} ${inc} ${src})
+add_subdirectory(color_magnify)
+add_subdirectory(MTCNN)
+add_subdirectory(skcf)
 
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} )
+add_executable(${PROJECT_NAME} main.cpp)
+
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${Caffe_LIBRARIES} color_magnify MTCNN skcf)
