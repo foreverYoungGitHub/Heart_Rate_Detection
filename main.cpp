@@ -139,8 +139,9 @@ int main() {
             mtcnn.detection(img, rectangles);
 
             for(auto rect : rectangles) {
-                rect = cv::Rect(rect.x * scale_factor * 0.9, rect.y * scale_factor * 0.8,
-                                rect.width * scale_factor * 1.4, rect.height * scale_factor * 1.2);
+                rect = cv::Rect((rect.x - rect.width * scale_factor * 0.2) * scale_factor, 
+                                (rect.y - rect.height * scale_factor * 0.2) * scale_factor,
+                                rect.width * scale_factor * 1.4, rect.height * scale_factor * 1.4);
                 auto skcf = std::make_shared<KTrackers>(false);
                 skcf->set_area(rect);
                 kcfs.push_back(skcf);
